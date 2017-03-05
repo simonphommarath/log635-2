@@ -10,7 +10,7 @@ with open ("grammar.cfg", encoding='utf-8', mode="r") as grammar_file:
 with open('text.txt', encoding='utf-8', mode='r') as content_file:
     story = content_file.read()
 
-print('\n' + story)
+print('\n' + story + '\n')
 
 # Text Modifier
 def conjonction_replacer(story):
@@ -19,8 +19,16 @@ def conjonction_replacer(story):
         story = story.replace(conjonction, '. ')
     return story
 
-def negation_replacer(story):
-    return story
+def relationClause_splitter(sentences):
+    RP = 'qui'
+    for index, sentence in enumerate(sentences):
+        if RP in sentence:
+            subSentence = sentence.split(', ')
+            newSentence1 = subSentence[0] + ' ' + subSentence[2]
+            newSentence2 = subSentence[1].replace(RP, subSentence[0])
+            sentences.extend([newSentence1, newSentence2])
+            del sentences[index]
+    return sentences
 
 # Story Analyser
 grammar = grammar.FeatureGrammar.fromstring(grammarText)
@@ -29,6 +37,8 @@ parser = nltk.ChartParser(grammar)
 story = conjonction_replacer(story)
 
 sentences = story.split('.')
+sentences = relationClause_splitter(sentences)
+
 subject = ""
 jess = "(deffact fact \n"
 
