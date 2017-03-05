@@ -4,10 +4,10 @@ import nltk
 from nltk import *
 
 # File opener
-with open ("grammar.cfg", "r") as grammar_file:
+with open ("grammar.cfg", encoding='utf-8', mode="r") as grammar_file:
     grammarText = grammar_file.read()
 
-with open('text.txt', 'r') as content_file:
+with open('text.txt', encoding='utf-8', mode='r') as content_file:
     story = content_file.read()
 
 print('\n' + story)
