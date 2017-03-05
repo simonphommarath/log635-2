@@ -10,7 +10,7 @@ with open ("grammar.cfg", encoding='utf-8', mode="r") as grammar_file:
 with open('text.txt', encoding='utf-8', mode='r') as content_file:
     story = content_file.read()
 
-print('\n' + story)
+print('\n' + story + '\n')
 
 # Text Modifier
 def conjonction_replacer(story):
@@ -19,8 +19,17 @@ def conjonction_replacer(story):
         story = story.replace(conjonction, '. ')
     return story
 
-def negation_replacer(story):
-    return story
+def relationClause_splitter(sentences):
+    RP = 'qui'
+    for index, sentence in enumerate(sentences):
+        if RP in sentence:
+            subSentence = sentence.split(', ')
+            newSentence1 = subSentence[0] + ' ' + subSentence[2]
+            newSentence2 = subSentence[1].replace(RP, subSentence[0])
+            del sentences[index]
+            sentences.insert(index, newSentence1)
+            sentences.insert(index, newSentence2)
+    return sentences
 
 # Story Analyser
 grammar = grammar.FeatureGrammar.fromstring(grammarText)
@@ -29,6 +38,8 @@ parser = nltk.ChartParser(grammar)
 story = conjonction_replacer(story)
 
 sentences = story.split('.')
+sentences = relationClause_splitter(sentences)
+
 subject = ""
 jess = "(deffact fact \n"
 
@@ -45,7 +56,6 @@ for sentence in sentences:
 
     for tree in trees:
         print(tree)
-        nltk.draw.tree.draw_trees(tree)
         s = str(tree.label()['SEM']) 
         for n in numbers:
             s = s.replace('#NUM#', n, 1)
@@ -56,6 +66,7 @@ for sentence in sentences:
         jess += "\t(" + fact[0] + " " + fact[1] + ")\n"
         subject = s[s.index('subject(') + 8: s.index(')')]
         print(subject + '\n')
+        nltk.draw.tree.draw_trees(tree)
 jess += ")"
 with open('fact.clp','w') as f:
     f.write(jess)
