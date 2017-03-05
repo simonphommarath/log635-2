@@ -56,7 +56,6 @@ for sentence in sentences:
         jess += "\t(" + fact[0] + " " + fact[1] + ")\n"
         subject = s[s.index('subject(') + 8: s.index(')')]
         print(subject + '\n')
-        break
 jess += ")"
 with open('fact.clp','w') as f:
     f.write(jess)
