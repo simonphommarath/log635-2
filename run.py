@@ -26,8 +26,9 @@ def relationClause_splitter(sentences):
             subSentence = sentence.split(', ')
             newSentence1 = subSentence[0] + ' ' + subSentence[2]
             newSentence2 = subSentence[1].replace(RP, subSentence[0])
-            sentences.extend([newSentence1, newSentence2])
             del sentences[index]
+            sentences.insert(index, newSentence1)
+            sentences.insert(index, newSentence2)
     return sentences
 
 # Story Analyser
@@ -55,7 +56,7 @@ for sentence in sentences:
 
     for tree in trees:
         print(tree)
-        nltk.draw.tree.draw_trees(tree)
+        #nltk.draw.tree.draw_trees(tree)
         s = str(tree.label()['SEM']) 
         for n in numbers:
             s = s.replace('#NUM#', n, 1)
