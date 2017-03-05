@@ -1,0 +1,5 @@
+(deffact fact 
+	( brule corps)
+	( froid corps)
+	( brule corps)
+)
