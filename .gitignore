@@ -89,3 +89,5 @@ ENV/
 .ropeproject
 
 run\.bat
+
+fact.clp
