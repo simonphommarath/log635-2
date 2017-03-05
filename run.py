@@ -3,31 +3,35 @@
 import nltk
 from nltk import *
 
-with open ("grammar.cfg", "r") as myfile:
-    grammaireText=myfile.read()
+with open ("grammar.cfg", "r") as grammar_file:
+    grammarText = grammar_file.read()
 
 with open('text.txt', 'r') as content_file:
-    content = content_file.read()
+    story = content_file.read()
 
-grammar = grammar.FeatureGrammar.fromstring(grammaireText)
+grammar = grammar.FeatureGrammar.fromstring(grammarText)
 parser = nltk.ChartParser(grammar)
 
+print('\n' + story)
 
-content = content.replace(', mais', '.')
-#content = content.replace('il', 'Le corps')
+conjonctions = [', mais',', car',', par contre',', mais']
+for conjonction in conjonctions:
+    story = story.replace(conjonction, '.')
+
+print('\n' + story + '\n')
+
 subject = ""
 
-for phrase in content.split('.'):
-    phrase = phrase.replace('il', subject)
-    print(phrase)
-    tokens = phrase.split()
+for sentence in story.split('.'):
+    sentence = sentence.replace('il', subject)
+    print(sentence)
+    tokens = sentence.split()
     parser = parse.FeatureEarleyChartParser(grammar)
     trees = parser.parse(tokens)
     for tree in trees:
         print(tree)
         #nltk.draw.tree.draw_trees(tree)
         s = str(tree.label()['SEM'])
-        print(s)
+        print(s + '\n')
         subject = s[s.index('subject(') + 8: s.index(')')]
-        print(subject)
-
+        #print(subject)
