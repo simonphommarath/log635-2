@@ -37,12 +37,18 @@ for sentence in sentences:
     print(sentence)
     tokens = sentence.split()
     parser = parse.FeatureEarleyChartParser(grammar)
-    trees = parser.parse(tokens)
     
+    sent = ['#NUM#' if i.isdigit() else i for i in tokens]
+    numbers = [i for i in tokens if i.isdigit()]
+    
+    trees = parser.parse(sent)
+
     for tree in trees:
         print(tree)
         nltk.draw.tree.draw_trees(tree)
-        s = str(tree.label()['SEM'])
+        s = str(tree.label()['SEM']) 
+        for n in numbers:
+            s = s.replace('#NUM#', n, 1)
         print(s + '\n')
 	#JessReformat
         facts = s[:len(s)-2].split('&')
@@ -50,7 +56,7 @@ for sentence in sentences:
         jess += "\t(" + fact[0] + " " + fact[1] + ")\n"
         subject = s[s.index('subject(') + 8: s.index(')')]
         print(subject + '\n')
-
+        break
 jess += ")"
 with open('fact.clp','w') as f:
     f.write(jess)
