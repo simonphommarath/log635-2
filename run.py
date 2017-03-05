@@ -30,29 +30,27 @@ story = conjonction_replacer(story)
 
 sentences = story.split('.')
 subject = ""
-fact = "(deffact fact \n"
-fact += ""
+jess = "(deffact fact \n"
 
 for sentence in sentences:
     sentence = sentence.replace(' il ', subject+ ' ')
-    #print(sentence)
+    print(sentence)
     tokens = sentence.split()
     parser = parse.FeatureEarleyChartParser(grammar)
     trees = parser.parse(tokens)
     
     for tree in trees:
-        #print(tree)
-        #nltk.draw.tree.draw_trees(tree)
+        print(tree)
+        nltk.draw.tree.draw_trees(tree)
         s = str(tree.label()['SEM'])
         print(s + '\n')
 	#JessReformat
-        sStringWithoutClosingBrackets = s[:len(s)-2]        
-        sStringWithoutTheAnd = sStringWithoutClosingBrackets.split('&')
-        NLTKparams = sStringWithoutTheAnd[1].split("(")
-        fact += "\t("+NLTKparams[0]+" "+NLTKparams[1]+")\n"
+        facts = s[:len(s)-2].split('&')
+        fact = facts[1].split("(")
+        jess += "\t(" + fact[0] + " " + fact[1] + ")\n"
         subject = s[s.index('subject(') + 8: s.index(')')]
         print(subject + '\n')
 
-fact += ")"
+jess += ")"
 with open('fact.clp','w') as f:
-    f.write(fact)
+    f.write(jess)
