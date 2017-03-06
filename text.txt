@@ -21,3 +21,4 @@ BobaFett conduis un TieFighter.
 Bossk conduis un TieFighter.
 Anakin conduis un XWingStarfighter.
 Vader, qui a un sabreLaser rouge, était sur Naboo à 2 h.
+Anakin n' est pas impériaux.
