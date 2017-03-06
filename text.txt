@@ -4,3 +4,20 @@ Obi, qui est la victime, est mort sur Naboo à 6 h.
 Han a les cheveux bleus, car il les a teindues.
 Le millenium-falcon consume 30 litre au 100 km et il atteint 4000 km/h.
 Anakin, qui a les cheveux rouge, était sur Naboo à 3 h.
+Vader brule les impériaux.
+JarJarBinks mange des fruits.
+Bossk est un bountyHunter.
+Bossk tire 100 balles au seconde.
+BobaFett, qui a un pistolet vert, était sur Alderaan à 4 h.
+Le XWingStarfighter consume 15 litre au 100 km et il atteint 3000 km/h.
+JarJarBinks était sur Alderaan à 8 h.
+BobaFett tire 200 balles au seconde.
+Vader utilise un sabreLaser.
+JarJarBinks utilise un couteau.
+JarJarBinks conduis un XWingStarfighter.
+Le starDestroyer consume 10 litre au 10000 km et il atteint 200 km/h.
+Vader conduis un starDestroyer.
+BobaFett conduis un TieFighter.
+Bossk conduis un TieFighter.
+Anakin conduis un XWingStarfighter.
+Vader, qui a un sabreLaser rouge, était sur Naboo à 2 h.
