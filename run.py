@@ -100,5 +100,9 @@ for sentence in sentences:
         print(subject + '\n')
         #nltk.draw.tree.draw_trees(tree)
 jess += ")"
+
+jess = jess.replace(',', ' ')
+print(jess)
+
 with open('fact.clp','w') as f:
     f.write(jess)
