@@ -31,6 +31,35 @@ def relationClause_splitter(sentences):
             sentences.insert(index, newSentence2)
     return sentences
 
+def antonym_replacer(word):
+    positiveWord = ['rebel','brûlé']
+    negativeWord = ['impériaux','froid']
+    if (word in positiveWord):
+        indexW = positiveWord.index(word)
+        return negativeWord[indexW]
+    
+    indexW = negativeWord.index(word)
+    return positiveWord[indexW]
+
+def negation_remover(sentences):
+    antonym = ['','']
+    pre_negations = ["n'",'ne']
+    post_negations = ['pas']
+    for index, sentence in enumerate(sentences):
+        for pre_negation in pre_negations:
+            for post_negation in post_negations:
+                if ((pre_negation in sentence) and (post_negation)):
+                    subSentence = sentence.split(' ')
+                    pre_negationsPos = subSentence.index(pre_negation)
+                    post_negationsPos = subSentence.index(post_negation)
+                    subSentence[post_negationsPos + 1] = antonym_replacer(subSentence[(post_negationsPos + 1)])
+                    del subSentence[pre_negationsPos]
+                    del subSentence[post_negationsPos - 1]
+                    newSentence = ' '.join(subSentence)
+                    del sentences[index]
+                    sentences.insert(index, newSentence)
+    return sentences
+
 # Story Analyser
 grammar = grammar.FeatureGrammar.fromstring(grammarText)
 parser = nltk.ChartParser(grammar)
@@ -39,6 +68,9 @@ story = conjonction_replacer(story)
 
 sentences = story.split('.')
 sentences = relationClause_splitter(sentences)
+sentences = negation_remover(sentences)
+
+print('Story Analysis ...' + '\n')
 
 subject = ""
 jess = "(deffact fact \n"
@@ -66,7 +98,7 @@ for sentence in sentences:
         jess += "\t(" + fact[0] + " " + fact[1] + ")\n"
         subject = s[s.index('subject(') + 8: s.index(')')]
         print(subject + '\n')
-        nltk.draw.tree.draw_trees(tree)
+        #nltk.draw.tree.draw_trees(tree)
 jess += ")"
 with open('fact.clp','w') as f:
     f.write(jess)
