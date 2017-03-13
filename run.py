@@ -97,7 +97,7 @@ for sentence in sentences:
         fact = facts[1].split("(")
         jess += "\t(" + fact[0] + " " + fact[1] + ")\n"
         subject = s[s.index('subject(') + 8: s.index(')')]
-        print(subject + '\n')
+        #print(subject + '\n')
         #nltk.draw.tree.draw_trees(tree)
 jess += ")"
 
